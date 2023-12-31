@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-class AtariNet(nn.module):
+class AtariNet(nn.Module):
     def __init__(self, nb_actions=14):
         super(AtariNet, self).__init__()
 
@@ -46,3 +46,15 @@ class AtariNet(nn.module):
 
 
         output = state_value + (action_value - action_value.mean())
+
+        return output
+
+    def save_the_model(self, weights_filename='models/latest.pt'):
+        torch.save(self.state_dict(), weights_filename)
+
+    def load_the_model(self, weights_filename='models/latest.pt'):
+        try:
+            self.load_state_dict(torch.load(weights_filename))
+            print("Model Load Sucessfully")
+        except:
+            print("failed to load the model")
