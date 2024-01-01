@@ -33,7 +33,7 @@ class DQNBreakout(gym.Wrapper):
                 total_reward = total_reward-1
                 self.lives = current_lives
 
-            print(f"lives:{self.lives} , Total Reward: {total_reward}")
+            #print(f"lives:{self.lives} , Total Reward: {total_reward}")
             #print(observation)
             self.frame_buffer.append(observation)
             if done == True:

@@ -14,7 +14,7 @@ class ReplayMemory:
         self.device = device
         self.memory = []
         self.position = 0
-        self.memory_max_report
+        self.memory_max_report=0
 
     def insert(self, transition):  # switch to RAM if GPU memory is full
         transition = [item.to('cpu') for item in transition]
@@ -55,7 +55,7 @@ class Agent:
         self.gamma = 0.99
         self.nb_actions = nb_actions
 
-        self.optimizer = optim.AdanW(model.parameters, lr=learning_rate)
+        self.optimizer = optim.AdamW(model.parameters(), lr=learning_rate)
 
         print(f"starting epsilon is {self.epsilon}")
         print(f"epsilon decay is {self.epsilon_decay}")
