@@ -5,6 +5,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 from plot import Liveplot
 import numpy as np
+import time
 
 
 class ReplayMemory:
@@ -119,3 +120,16 @@ class Agent:
             if epoch % 1000 == 0:
                 self.model.save_the_model(f"models/model_iter_{epoch}.pt")
         return stats
+
+    def test(self, env):
+        for epoch in range(1,3):
+            state = env.reset()
+
+            done =False
+            for _ in range(10000):
+                time.sleep(0.01)
+                action=self.get_action(state)
+                state,reward,done,info = env.step(action)
+                if done:
+                    break
+
