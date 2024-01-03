@@ -40,9 +40,10 @@ class DQNKungFuMaster(gym.Wrapper):
                 break
 
         last_4_frames = self.frame_buffer[-4:]
-        stacked_frames = np.stack(last_4_frames, axis=0)
 
-        stacked_frames = self.process_observation(stacked_frames)
+
+
+        stacked_frames = self.process_observation(last_4_frames)
         #stacked_frames = torch.tensor(stacked_frames, dtype=torch.float32)
         stacked_frames = stacked_frames.to(self.device)
 
@@ -62,12 +63,12 @@ class DQNKungFuMaster(gym.Wrapper):
         observation = self.process_observation(observation)
         return observation
 
-    def process_observation(self, observation_stack):
+    def process_observation(self, last_4_frames):
         #print("Stack Size:", observation_stack.shape)
         processed_frames = []
 
-        for observation in observation_stack:
-            img = Image.fromarray(observation)
+        for i in range(4):
+            img = Image.fromarray(last_4_frames[i])
             img = img.convert("L")
 
             original_width, original_height = img.size
@@ -87,7 +88,7 @@ class DQNKungFuMaster(gym.Wrapper):
             #print("Processed Stack Size:", img.size())
 
         # Stack the processed frames along the first dimension
-        processed_stack = np.stack(processed_frames, axis=0)
+        processed_stack = np.stack(processed_frames, axis=1)
         #print("Processed Stack Size before torch:", processed_stack.shape)
         torch_processed_stack = torch.from_numpy(processed_stack)
         torch_processed_stack = torch_processed_stack.to(self.device)

@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import os
+import matplotlib.pyplot as plt
 
 class AtariNet(nn.Module):
     def __init__(self, nb_actions=14):
@@ -26,6 +27,7 @@ class AtariNet(nn.Module):
 
 
     def forward(self, x):
+
         #print("Input Size:", x.size())
 
         x = torch.Tensor(x)
@@ -41,7 +43,7 @@ class AtariNet(nn.Module):
         #print("After conv3 and ReLU Size:", x.size())
 
         x = self.flatten(x)
-        print("After Flatten Size:", x.size())
+        #print("After Flatten Size:", x.size())
 
 
 
