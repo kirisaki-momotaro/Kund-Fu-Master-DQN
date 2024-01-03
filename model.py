@@ -8,7 +8,7 @@ class AtariNet(nn.Module):
 
         self.relu = nn.ReLU()
         #TODO check CNN theory
-        self.conv1 = nn.Conv2d(1,8, kernel_size=(8, 8), stride=(4, 4))
+        self.conv1 = nn.Conv2d(4,8, kernel_size=(8, 8), stride=(4, 4))
         self.conv2 = nn.Conv2d(8, 16, kernel_size=(4, 4), stride=(2, 2))
         self.conv3 = nn.Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1))
 
@@ -16,22 +16,34 @@ class AtariNet(nn.Module):
 
         self.dropout = nn.Dropout(p=0.2) #drops some random weights to add some randomness
 
-        self.action_value1 = nn.Linear(4*40*100, 256)
+        self.action_value1 = nn.Linear(144, 256)
         self.action_value2 = nn.Linear(256, 256)
         self.action_value3 = nn.Linear(256, nb_actions)
 
-        self.state_value1 = nn.Linear(4*40*100, 256)
+        self.state_value1 = nn.Linear(144, 256)
         self.state_value2 = nn.Linear(256, 256)
         self.state_value3 = nn.Linear(256, 1)
 
 
     def forward(self, x):
-        x =torch.Tensor(x)
+        #print("Input Size:", x.size())
+
+        x = torch.Tensor(x)
+        #print("After torch.Tensor Conversion Size:", x.size())
+
         x = self.relu(self.conv1(x))
+        #print("After conv1 and ReLU Size:", x.size())
+
         x = self.relu(self.conv2(x))
+        #print("After conv2 and ReLU Size:", x.size())
+
         x = self.relu(self.conv3(x))
+        #print("After conv3 and ReLU Size:", x.size())
+
         x = self.flatten(x)
         print("After Flatten Size:", x.size())
+
+
 
         state_value = self.relu(self.state_value1(x))
         state_value = self.dropout(state_value)
