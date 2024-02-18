@@ -5,11 +5,11 @@ import numpy as np
 import torch
 from PIL import Image
 
-class DQNBreakout(gym.Wrapper):
+class DQNKungFuMaster(gym.Wrapper):
     def __init__(self,render_mode='rgb_array',repeat=4,device='cpu'):
         env = gym.make("ALE/KungFuMaster-v5",render_mode=render_mode)
 
-        super(DQNBreakout, self).__init__(env)
+        super(DQNKungFuMaster, self).__init__(env)
 
         self.image_shape = (84,84)
         self.repeat = repeat

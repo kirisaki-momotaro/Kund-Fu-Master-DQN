@@ -7,7 +7,7 @@ import os
 
 from model import AtariNet
 
-from breakout import *
+from kung_fu_master import *
 
 print(torch.cuda.is_available())
 
@@ -15,8 +15,8 @@ os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
-environment = DQNBreakout(device=device , render_mode='human')
-#environment = DQNBreakout(device=device)
+environment = DQNKungFuMaster(device=device , render_mode='human')
+#environment = DQNKungFuMaster(device=device)
 
 model = AtariNet(nb_actions= 14)
 
