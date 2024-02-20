@@ -14,6 +14,7 @@ class DQNKungFuMaster(gym.Wrapper):
         super(DQNKungFuMaster, self).__init__(env)
         self.image_shape = (84, 84)
         self.device = device
+        self.lives=env.ale.lives()
 
 
     def step(self, action):  # take step and get observation
@@ -24,6 +25,9 @@ class DQNKungFuMaster(gym.Wrapper):
         for i in range(4):  # you dont really want to react on every frame, goup frames 4 at a time
             observation, reward, done, trucated, info = self.env.step(action)
             total_reward += reward
+            current_lives = info['lives']
+            total_reward = total_reward - 200*(3-current_lives)
+
 
             proccessed_img = Image.fromarray(observation)
             proccessed_img = proccessed_img.resize(self.image_shape)
