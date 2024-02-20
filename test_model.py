@@ -22,10 +22,10 @@ model = AtariNet(nb_actions= 14)
 
 model.to(device)
 
-model.load_the_model('models/690.pt')
+model.load_the_model('models/latest.pt')
 print(device)
 agent = Agent(model=model,device=device,epsilon=0.05,
-              nb_warmup=5000, nb_actions=14, learning_rate=0.00001,memory_capacity=1000000,
+              nb_warmup=5000, nb_actions=14, learning_rate=0.00001,memory_capacity=100000,
                 batch_size=64)
 
 agent.test(env=environment)
