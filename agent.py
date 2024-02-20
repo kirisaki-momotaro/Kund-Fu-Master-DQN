@@ -116,7 +116,7 @@ class Agent:
                 print(len(self.memory))
                 print(" ")
 
-                average_returns = np.mean(stats['Returns'][-100:])
+                average_returns = np.mean(stats['Returns'][-10:])
                 stats['AvgReturns'].append(average_returns)
                 stats['EpsilonCheckpoint'].append(self.epsilon)
                 if (len(stats['Returns'])) > 100:
