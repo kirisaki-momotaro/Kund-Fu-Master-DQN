@@ -25,6 +25,7 @@ class ReplayMemory:
             self.memory.append(transition)
         else:
             self.memory.remove(self.memory[0])
+            self.memory.remove(self.memory[0])
             self.memory.append(transition)
 
     def sample(self, batch_size=32):
@@ -112,6 +113,7 @@ class Agent:
 
             if epoch % 10 == 0:
                 self.model.save_the_model()
+                print(len(self.memory))
                 print(" ")
 
                 average_returns = np.mean(stats['Returns'][-100:])
