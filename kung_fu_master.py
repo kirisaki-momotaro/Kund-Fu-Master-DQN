@@ -37,7 +37,7 @@ class DQNKungFuMaster(gym.Wrapper):
         frame = torch.from_numpy(frame)
         frame = frame.unsqueeze(0)
         frame = frame.unsqueeze(0)
-        print(frame.size)
+        #print(frame.size)
         frame = frame / 255.0
         frame = frame.to(self.device)
         buffer.clear()

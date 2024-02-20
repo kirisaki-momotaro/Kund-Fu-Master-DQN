@@ -6,6 +6,8 @@ import torch.nn.functional as F
 from plot import Liveplot
 import numpy as np
 import time
+from PIL import Image
+
 
 
 class ReplayMemory:
@@ -81,6 +83,12 @@ class Agent:
 
                 next_state, reward, done, info = env.step(action)
                 next_state=next_state.squeeze(0)
+
+                #img=next_state
+                #image_np = img.cpu().detach().numpy()
+                #image_np = image_np.squeeze()
+                #image_pil = Image.fromarray((image_np * 255).astype('uint8'))
+                #image_pil.show()
 
                 self.memory.insert([state, action, reward, done, next_state])
 
