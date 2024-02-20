@@ -31,12 +31,13 @@ class DQNKungFuMaster(gym.Wrapper):
             if done == True:
                 break
 
-        print(buffer[3])
+        #print(buffer[3])
         frame = buffer[-1:].copy()
         frame = np.array(frame)
         frame = torch.from_numpy(frame)
         frame = frame.unsqueeze(0)
         frame = frame.unsqueeze(0)
+        print(frame.size)
         frame = frame / 255.0
         frame = frame.to(self.device)
         buffer.clear()
@@ -76,7 +77,7 @@ class DQNKungFuMaster(gym.Wrapper):
         frame = np.array(frame)
         frame = torch.from_numpy(frame)
         frame = frame.unsqueeze(0)
-        frame = frame.unsqueeze(0)
+        frame = frame.unsqueeze(0)        
         frame = frame / 255.0
         frame = frame.to(self.device)
 

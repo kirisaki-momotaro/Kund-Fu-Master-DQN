@@ -80,6 +80,7 @@ class Agent:
                 action = self.get_action(state)
 
                 next_state, reward, done, info = env.step(action)
+                next_state=next_state.squeeze(0)
 
                 self.memory.insert([state, action, reward, done, next_state])
 
