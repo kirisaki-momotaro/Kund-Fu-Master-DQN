@@ -14,11 +14,12 @@ class DQNKungFuMaster(gym.Wrapper):
         super(DQNKungFuMaster, self).__init__(env)
         self.image_shape = (84, 84)
         self.device = device
-        self.buffer=[]
+
 
     def step(self, action):  # take step and get observation
         total_reward = 0
         done = False
+        image=None
 
         for i in range(4):  # you dont really want to react on every frame, goup frames 4 at a time
             observation, reward, done, trucated, info = self.env.step(action)
@@ -28,24 +29,30 @@ class DQNKungFuMaster(gym.Wrapper):
             proccessed_img = proccessed_img.resize(self.image_shape)
             proccessed_img = proccessed_img.convert("L")
             proccessed_img = self.crop_image(proccessed_img, 5, 12, 20)
-
-            self.buffer.append(proccessed_img)
+            if(i==0):
+                image=proccessed_img
+            else:
+                image=np.concatenate((image,proccessed_img),axis=1)
             if done == True:
+                image = np.concatenate((proccessed_img, proccessed_img, proccessed_img, proccessed_img), axis=1)
                 break
+
+
+
 
         #print(buffer[3])
         #print(self.buffer[-1:][0])
         #print(self.buffer[-1:])
-        frame = asarray(self.buffer[-1:][0])
+        frame = image
         #frame = np.array(self.buffer[-1:])
         frame = np.array(frame)
         frame = torch.from_numpy(frame)
         frame = frame.unsqueeze(0)
         frame = frame.unsqueeze(0)
-        #print(frame.size)
+        #print(frame.size())
         frame = frame / 255.0
         frame = frame.to(self.device)
-        self.buffer.clear()
+
 
         total_reward = torch.tensor(total_reward).view(1, -1).float()
         total_reward = total_reward.to(self.device)
@@ -78,7 +85,7 @@ class DQNKungFuMaster(gym.Wrapper):
         proccessed_img = proccessed_img.resize(self.image_shape)
         proccessed_img = proccessed_img.convert("L")
         proccessed_img = self.crop_image(proccessed_img, 5, 12, 20)
-        frame = proccessed_img
+        frame = np.concatenate((proccessed_img,proccessed_img,proccessed_img,proccessed_img),axis =1)
         frame = np.array(frame)
         frame = torch.from_numpy(frame)
         frame = frame.unsqueeze(0)

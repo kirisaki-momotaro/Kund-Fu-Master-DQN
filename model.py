@@ -15,11 +15,11 @@ class AtariNet(nn.Module):
         self.flatten = nn.Flatten()
         self.dropout = nn.Dropout(p=0.2) #drops some random weights to add some randomness
 
-        self.action_value1 = nn.Linear(384, 1024)
+        self.action_value1 = nn.Linear(2304, 1024)
         self.action_value2 = nn.Linear(1024, 1024)
         self.action_value3 = nn.Linear(1024, nb_actions)
 
-        self.state_value1 = nn.Linear(384, 1024)
+        self.state_value1 = nn.Linear(2304, 1024)
         self.state_value2 = nn.Linear(1024, 1024)
         self.state_value3 = nn.Linear(1024, 1)
 
