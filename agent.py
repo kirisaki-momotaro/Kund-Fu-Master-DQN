@@ -82,7 +82,7 @@ class Agent:
                 action = self.get_action(state)
 
                 next_state, reward, done, info = env.step(action)
-                next_state=next_state.squeeze(0)
+                #next_state=next_state.squeeze(0)
 
                 #img=next_state
                 #image_np = img.cpu().detach().numpy()

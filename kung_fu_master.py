@@ -2,6 +2,7 @@ import collections
 import cv2
 import gym
 import numpy as np
+from numpy import asarray
 import torch
 from PIL import Image
 
@@ -13,11 +14,12 @@ class DQNKungFuMaster(gym.Wrapper):
         super(DQNKungFuMaster, self).__init__(env)
         self.image_shape = (84, 84)
         self.device = device
+        self.buffer=[]
 
     def step(self, action):  # take step and get observation
         total_reward = 0
         done = False
-        buffer = []
+
         for i in range(4):  # you dont really want to react on every frame, goup frames 4 at a time
             observation, reward, done, trucated, info = self.env.step(action)
             total_reward += reward
@@ -27,12 +29,15 @@ class DQNKungFuMaster(gym.Wrapper):
             proccessed_img = proccessed_img.convert("L")
             proccessed_img = self.crop_image(proccessed_img, 5, 12, 20)
 
-            buffer.append(proccessed_img)
+            self.buffer.append(proccessed_img)
             if done == True:
                 break
 
         #print(buffer[3])
-        frame = buffer[-1:].copy()
+        #print(self.buffer[-1:][0])
+        #print(self.buffer[-1:])
+        frame = asarray(self.buffer[-1:][0])
+        #frame = np.array(self.buffer[-1:])
         frame = np.array(frame)
         frame = torch.from_numpy(frame)
         frame = frame.unsqueeze(0)
@@ -40,7 +45,7 @@ class DQNKungFuMaster(gym.Wrapper):
         #print(frame.size)
         frame = frame / 255.0
         frame = frame.to(self.device)
-        buffer.clear()
+        self.buffer.clear()
 
         total_reward = torch.tensor(total_reward).view(1, -1).float()
         total_reward = total_reward.to(self.device)
