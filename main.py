@@ -25,7 +25,7 @@ model.to(device)
 model.load_the_model()
 
 agent = Agent(model=model,device=device,epsilon=1.0,
-              nb_warmup=5000, nb_actions=14, learning_rate=0.00025,memory_capacity=50000,
-                batch_size=64)
+              nb_warmup=5000, nb_actions=14, learning_rate=0.00020,memory_capacity=2000000,
+                batch_size=256)
 
 agent.train(env=environment,epochs=200000)
