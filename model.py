@@ -8,20 +8,20 @@ class AtariNet(nn.Module):
 
         self.relu = nn.ReLU()
         #TODO check CNN theory
-        self.conv1 = nn.Conv2d(1,32, kernel_size=(8, 8), stride=(4, 4))
+        self.conv1 = nn.Conv2d(1,32, kernel_size=(8, 8), stride=(3, 3))
         self.conv2 = nn.Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
         self.conv3 = nn.Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
 
         self.flatten = nn.Flatten()
 
 
-        self.action_value1 = nn.Linear(2304 , 256 )
-        self.action_value2 = nn.Linear(256, 256)
-        self.action_value3 = nn.Linear(256, nb_actions)
+        self.action_value1 = nn.Linear(6144 , 1024 )
+        self.action_value2 = nn.Linear(1024, 1024)
+        self.action_value3 = nn.Linear(1024, nb_actions)
 
-        self.state_value1 = nn.Linear(2304 , 256 )
-        self.state_value2 = nn.Linear(256, 256)
-        self.state_value3 = nn.Linear(256, 1)
+        self.state_value1 = nn.Linear(6144 , 1024 )
+        self.state_value2 = nn.Linear(1024, 1024)
+        self.state_value3 = nn.Linear(1024, 1)
 
 
     def forward(self, x):
